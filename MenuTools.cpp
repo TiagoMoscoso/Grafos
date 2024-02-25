@@ -5,7 +5,8 @@
 #include "TerminalColors.h"
 #include <algorithm>
 #include <iomanip>
-#include "GrafTools.h"
+#include "GrafTools.cpp"
+#include "GetPoints.h"
 
 int NumVertices = 0;
 short TipoDeEstrutura = -1; // 0 matriz, 1 lista, 2 os dois
@@ -139,12 +140,88 @@ void generateGrafo()
     generateGrafo(NumVertices, TipoDeEstrutura);
 }
 
+void indentificaVizinhanca()
+{
+    cout << TerminalColors::Green;
+    cout << "Entre com os pontos para buscar vizinhanca:" << endl;
+    cout << TerminalColors::White;
+    vector<int> pontos =  points::getPontos(NumVertices);
+    identificacaoDeVizinhanca(pontos[0], pontos[1], NumVertices, TipoDeEstrutura);
+}
+
+void indentificacaoSucecao()
+{
+    cout << TerminalColors::Green;
+    cout << "Entre com os pontos para buscar sucecao:" << endl;
+    cout << TerminalColors::White;
+    vector<int> pontos =  points::getPontos(NumVertices);
+    indentificacaoSucecao(pontos[0], pontos[1], NumVertices, TipoDeEstrutura);
+}
+
+void indentificacaoPredececao()
+{
+    cout << TerminalColors::Green;
+    cout << "Entre com os pontos para buscar predececao:" << endl;
+    cout << TerminalColors::White;
+    vector<int> pontos =  points::getPontos(NumVertices);
+    indentificacaoPredececao(pontos[0], pontos[1], NumVertices, TipoDeEstrutura);
+}
+void identificaSucPre()
+{
+    cout << TerminalColors::Green;
+    cout << "Escolha a opcao dentre as seguintes:" << endl;
+    cout << TerminalColors::Yellow;
+    cout << setw(20) << "Identificar predececao:" << setw(10) << "(0)" << endl;
+    cout << setw(20) << "Identificar sucecao:" << setw(10) << "(1)" << endl;
+
+    int selecao = -1;
+
+    while(selecao == -1)
+    {
+        string entrada;
+        cin >> entrada;
+
+        if(entrada == "0" || entrada == "1")
+        {
+            selecao = stoi(entrada);
+        }
+        else
+        {
+            cout << TerminalColors::Red;
+            cout << "Entrada invalida" << endl;
+            cout << endl;
+        }
+    }
+
+    switch (selecao)
+    {
+    case 0:
+        indentificacaoPredececao();
+        break;
+    case 1:
+        indentificacaoSucecao();
+        break;
+    }
+}
+
 void printaEmulatorMenu()
 {
     cout << TerminalColors::Green;
-    cout << "Escolha a opção dentre as seguintes:" << endl;
+    cout << "Escolha a opcao dentre as seguintes:" << endl;
     cout << TerminalColors::Yellow;
     cout << setw(20) << "Criar arresta:" << setw(10) << "(0)" << endl;
+    cout << setw(20) << "Remover arresta:" << setw(10) << "(1)" << endl;
+    if(!TipoGrafo)
+    {
+        cout << setw(20) << "Identificar vizinhança:" << setw(10) << "(2)" << endl;
+    }
+    else
+    {
+        cout << setw(20) << "Identificar Sucecao ou Predececao:" << setw(10) << "(2)" << endl;
+    }
+    cout << setw(20) << "Indetifica grau de um vertice:" << setw(10) << "(3)" << endl;
+    cout << setw(20) << "Indetifica se o grafo e simples:" << setw(10) << "(4)" << endl;
+    cout << setw(20) << "Indetifica se o grafo e completo:" << setw(10) << "(5)" << endl;
     cout << TerminalColors::Red;
     cout << "Para sair clique (Q)" << endl;
     cout << TerminalColors::White;
@@ -153,62 +230,30 @@ void printaEmulatorMenu()
 
 void adicionaArresta()
 {
-    int pontoA = -1;
-    int pontoB = -1;
-    while(pontoA == -1 || pontoB == -1)
-    {
-        if(pontoA == -1)
-        {
-            try
-            {
-                cout << TerminalColors::Green;
-                cout << "Entre com o ponto A" << endl;
-                cout << TerminalColors::White;
-                string auxEntrada;
-                cin >> auxEntrada;
-                pontoA = stoi(auxEntrada);
-
-                if(pontoA < 0 || pontoA >= NumVertices)
-                {
-                    pontoA = -1;
-                    throw exception();
-                }
-            }
-            catch(exception ex)
-            {
-                cout << TerminalColors::Red;
-                cout << "Ponto A invalido!!!" << endl;
-                cout << TerminalColors::White;
-            }
-        }
-        if(pontoB == -1)
-        {
-            try
-            {
-                cout << TerminalColors::Green;
-                cout << "Entre com o ponto B" << endl;
-                cout << TerminalColors::White;
-
-                string auxEntrada;
-                cin >> auxEntrada;
-                pontoB = stoi(auxEntrada);
-                if(pontoB < 0 || pontoB >= NumVertices)
-                {
-                    pontoB = -1;
-                    throw exception();
-                }
-            }
-            catch(exception ex)
-            {
-                cout << TerminalColors::Red;
-                cout << "Ponto B invalido!!!" << endl;
-                cout << TerminalColors::White; 
-            }
-        }
-    }
-    adicionaArresta(pontoA, pontoB, NumVertices, TipoDeEstrutura, TipoGrafo);
+    cout << TerminalColors::Green;
+    cout << "Entre com os pontos para adicionar uma arresta:" << endl;
+    cout << TerminalColors::White;
+    vector<int> pontos =  points::getPontos(NumVertices);
+    adicionaArresta(pontos[0], pontos[1], NumVertices, TipoDeEstrutura, TipoGrafo);
 }
 
+void identificaGrauDoVertice()
+{
+    cout << TerminalColors::Green;
+    cout << "Entre com os pontos para adicionar uma arresta:" << endl;
+    cout << TerminalColors::White;
+    int ponto =  points::getPonto(NumVertices);
+    indentificacaoGrau(ponto, NumVertices, TipoDeEstrutura, TipoGrafo);
+}
+
+void removeArresta()
+{
+    cout << TerminalColors::Green;
+    cout << "Entre com os pontos para remover uma arresta:" << endl;
+    cout << TerminalColors::White;
+    vector<int> pontos =  points::getPontos(NumVertices);
+    removeArresta(pontos[0], pontos[1], NumVertices, TipoDeEstrutura, TipoGrafo);   
+}
 void startEmulator()
 {
     string entrada = "";
@@ -229,6 +274,28 @@ void startEmulator()
                 {
                     case 0:
                         adicionaArresta();
+                    break;
+                    case 1:
+                        removeArresta();
+                    break;
+                    case 2:
+                        if(!TipoGrafo)
+                        {
+                            indentificaVizinhanca();
+                        }
+                        else
+                        {
+                            identificaSucPre();
+                        }
+                    break;
+                    case 3:
+                        identificaGrauDoVertice();
+                    break;
+                    case 4:
+                        indentificaSimples(NumVertices, TipoDeEstrutura);
+                    break;
+                    case 5:
+                        identificaCompleto(NumVertices, TipoDeEstrutura , TipoGrafo);
                     break;
                     default:
                     throw exception();

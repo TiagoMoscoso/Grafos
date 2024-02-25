@@ -3,9 +3,9 @@
 #include <string>
 #include <limits>
 
-#include "GrafTools.h"
+#include "GrafTools.cpp"
 #include "TerminalColors.h"
-#include "MenuTools.h"
+#include "MenuTools.cpp"
 
 using namespace std;
 

@@ -10,7 +10,7 @@ class TerminalColors
         static const string Green;
         static const string Yellow;
         static const string Red;
-        static const string Blue;//roxo
+        static const string Blue;
         static const string White;
 };
 
