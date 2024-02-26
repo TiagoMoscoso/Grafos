@@ -1,10 +1,5 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <limits>
-
-#include "GrafTools.cpp"
-#include "TerminalColors.h"
+#include "Utils/TerminalColors.h"
 #include "MenuTools.cpp"
 
 using namespace std;
@@ -15,15 +10,19 @@ int main()
 
     cout << "Bem vindo ao GrafEmulator" << endl;
 
-    setNumVertices();
+    Menu menu;
 
-    setTipoEstrutura();
+    menu.setNumVertices();
 
-    setTipoGrafo();
+    menu.setTipoEstrutura();
 
-    generateGrafo();
+    menu.setTipoGrafo();
 
-    startEmulator();
+    menu.setPrint();
+
+    menu.generateGrafo();
+
+    menu.startEmulator();
     
     cout << TerminalColors::White;
 }
