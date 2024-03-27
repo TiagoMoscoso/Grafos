@@ -60,9 +60,6 @@
         "iomanip": "cpp",
         "list": "cpp",
         "random": "cpp",
-        "queue": "cpp",
-        "array": "cpp",
-        "deque": "cpp",
-        "span": "cpp"
+        "queue": "cpp"
     }
 }
