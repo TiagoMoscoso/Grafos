@@ -360,4 +360,32 @@ class GrafTools
             cout << TerminalColors::White;
             cout<< endl;
         }
+
+        void adicionaVertice(int numAdicionar)
+        {
+            string adicionado = "";
+            if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+            {
+                GfMt.adicionaVertice(NumVertices,numAdicionar);
+                if(Print)
+                    GfMt.printaMatriz(NumVertices+numAdicionar);
+                adicionado += "Matriz";
+                if(TipoDeEstrutura == 2)
+                    adicionado += " e ";
+                cout<<endl;
+            }
+            if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+            {
+                GfLs.adicionaVertice(NumVertices,numAdicionar);
+                if(Print)
+                    GfLs.printaLista(NumVertices+numAdicionar);
+                adicionado += "Lista";
+            }
+            NumVertices+=numAdicionar;
+            cout << TerminalColors::Green;
+            cout << "Adicionado "<< numAdicionar << " vertice";
+            if(numAdicionar > 1)
+                cout << "s";
+            cout << " em"<< TerminalColors::Red << adicionado <<endl;    
+        }
 };

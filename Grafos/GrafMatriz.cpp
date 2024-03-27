@@ -266,4 +266,28 @@ class GrapMatriz
             cout<< endl;
             }
         }
+        void adicionaVertice(int numVertices, int numAdicionar)
+        {
+            int ** MatrizGrapAux;
+
+            MatrizGrapAux = (int **)malloc(numVertices+numAdicionar * sizeof(int *));//linhas
+            for (int i = 0; i < numVertices+numAdicionar; i++) {
+                MatrizGrapAux[i] = (int *)malloc(numVertices+numAdicionar * sizeof(int));//colunas
+                for (int j = 0; j < numVertices+numAdicionar; j++)
+                {
+                    if(j >= numVertices || i >= numVertices)
+                    {
+                        MatrizGrapAux[i][j] = 0;
+                    }
+                    else
+                    {
+                        MatrizGrapAux[i][j] = MatrizGrap[i][j];
+                    }
+                }
+            }
+
+            free(MatrizGrap);
+
+            MatrizGrap = MatrizGrapAux;
+        }
 };

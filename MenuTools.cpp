@@ -262,6 +262,7 @@ class Menu
             cout << setw(20) << "Indetifica se o grafo e completo:" << setw(10) << "(5)" << endl;
             cout << setw(20) << "Indetifica se o grafo e bipartido:" << setw(10) << "(6)" << endl;
             cout << setw(20) << "Gerar grafo aleatorio:" << setw(10) << "(7)" << endl;
+            cout << setw(20) << "Adiciona vertice:" << setw(10) << "(8)" << endl;
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
             cout << TerminalColors::White;
@@ -295,6 +296,26 @@ class Menu
             Gt.removeArresta(pontos[0], pontos[1]);   
         }
 
+        void adicionaVertice()
+        {
+            cout << TerminalColors::Green;
+            cout << "Entre com o numero de vertices para adicionar:" << endl;
+            cout << TerminalColors::White;
+            int num = -1;
+            while(num < 0)
+            {
+                cin >> num;
+                if(num < 0)
+                {
+                    cout << TerminalColors::Red;
+                    cout << "O numero deve ser maior ou igual a 0:" << endl; 
+                }
+                else
+                {
+                    Gt.adicionaVertice(num);
+                }
+            }
+        }
         void criaGrafoAleatorio()
         {
             int numArrestas = -1;
@@ -384,6 +405,9 @@ class Menu
                             break;
                             case 7:
                                 criaGrafoAleatorio();
+                            break;
+                            case 8:
+                                adicionaVertice();
                             break;
                             default:
                             throw exception();

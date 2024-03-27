@@ -267,4 +267,27 @@ class GrafList
             }
             return false;
         }
+
+        void adicionaVertice(int numVertices, int numAdicionar)
+        {
+            list<int> ** ListGrapAux;
+
+            ListGrapAux = (list<int> **)malloc(numVertices+numAdicionar * sizeof(int *));//colunas
+            for (int i = 0; i < numVertices+numAdicionar; i++)
+            {
+                if(i >= numVertices)
+                {
+                    ListGrapAux[i] = new list<int>;
+                    ListGrapAux[i]->insert(ListGrapAux[i]->begin(), i);
+                }
+                else
+                {
+                    ListGrapAux[i] = ListGrap[i];   
+                }
+            }
+
+            free(ListGrap);
+            
+            ListGrap = ListGrapAux;
+        }
 };
