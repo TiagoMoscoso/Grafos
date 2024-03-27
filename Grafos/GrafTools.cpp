@@ -13,10 +13,42 @@ class GrafTools
         int NumVertices = 0;
         short TipoDeEstrutura = -1;//0 matriz, 1 lista, 2 matriz e lista
         bool TipoGrafo;// true direcionado, false nao direcionado
-
+        
         void setPrint()
         {
             Print = !Print;
+        }
+
+        void verificaBipartido()
+        {
+            bool validacao = false;
+            if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+            {
+                validacao = GfMt.verificaBipartido(NumVertices);
+                if(Print)
+                    GfMt.printaMatriz(NumVertices);
+                cout << endl;
+            }
+            if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+            {
+                validacao = GfLs.verificaBipartido(NumVertices);
+                if(Print)
+                    GfLs.printaLista(NumVertices);
+                cout << endl;
+            }
+
+            if(validacao)
+            {
+                cout << TerminalColors::Green;
+                cout << "Sim e bipartido." << endl;
+                cout << endl;
+            }
+            else
+            {
+                cout << TerminalColors::Green;
+                cout << "Nao e bipartido." << endl;
+                cout << endl;
+            }
         }
 
         void generateGrafo()

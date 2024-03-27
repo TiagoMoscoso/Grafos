@@ -260,6 +260,7 @@ class Menu
             cout << setw(20) << "Indetifica grau de um vertice:" << setw(10) << "(3)" << endl;
             cout << setw(20) << "Indetifica se o grafo e simples:" << setw(10) << "(4)" << endl;
             cout << setw(20) << "Indetifica se o grafo e completo:" << setw(10) << "(5)" << endl;
+            cout << setw(20) << "Indetifica se o grafo e bipartido:" << setw(10) << "(6)" << endl;
             cout << setw(20) << "Gerar grafo aleatorio:" << setw(10) << "(7)" << endl;
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
@@ -327,6 +328,16 @@ class Menu
         }
         void startEmulator()
         {
+            setNumVertices();
+
+            setTipoEstrutura();
+
+            setTipoGrafo();
+
+            setPrint();
+
+            generateGrafo();
+            
             string entrada = "";
             cout << "" << endl;
 
@@ -367,6 +378,9 @@ class Menu
                             break;
                             case 5:
                                 Gt.identificaCompleto();
+                            break;
+                            case 6:
+                                Gt.verificaBipartido();
                             break;
                             case 7:
                                 criaGrafoAleatorio();

@@ -12,16 +12,6 @@ int main()
 
     Menu menu;
 
-    menu.setNumVertices();
-
-    menu.setTipoEstrutura();
-
-    menu.setTipoGrafo();
-
-    menu.setPrint();
-
-    menu.generateGrafo();
-
     menu.startEmulator();
     
     cout << TerminalColors::White;

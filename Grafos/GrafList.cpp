@@ -2,12 +2,65 @@
 #include <list>
 #include "../Utils/TerminalColors.h"
 #include "../Utils/GenerateValidation.h"
+#include <queue>
+#include "../Utils/GenerateRandomNum.h"
 
 class GrafList
 {
     private:
         list<int> ** ListGrap; //ListGrap[i]->push_back(2); to add
     public:
+        bool verificaBipartido(int numVertices)
+        {
+            int *corArray = (int *)calloc(numVertices, sizeof(int *));
+
+            for (int i = 0; i < numVertices; ++i)
+                    corArray[i] = -1;
+
+            queue<int> fila;
+            
+            GenerateRandomNum gen;
+            ValidationClass valid(numVertices);
+
+            int contador = numVertices;
+
+            while (!fila.empty() || contador > 0)
+            {
+                    if(fila.empty() && contador > 0)
+                    {
+                        while(true)
+                        {
+                          int gerado = gen.GenerateRandomInt(numVertices-1);
+                          if(valid.Validation[gerado] == 0)
+                          {
+                              fila.push(gerado);
+                              contador--;
+                              corArray[gerado] = 1;
+                              break;
+                          }
+                        }
+                    }
+                    int primeiroFila = fila.front();
+                    fila.pop();
+                    valid.Validation[primeiroFila]++;
+            
+                        for (auto vert = ++ListGrap[primeiroFila]->begin(); vert != ListGrap[primeiroFila]->end(); ++vert) 
+                        {
+                            if(primeiroFila == *vert)
+                                return false;
+                            if (corArray[*vert] == -1)
+                            {
+                                corArray[*vert] = 1 - corArray[primeiroFila];
+                                fila.push(*vert);
+                                contador--;
+                            }
+                            else if(corArray[*vert] == corArray[primeiroFila])
+                                return false;
+                        }
+            }
+
+            return true;
+        }
         bool indentificaSimples(int numVertices)
         {
             ValidationClass valid(numVertices);

@@ -59,6 +59,10 @@
         "xutility": "cpp",
         "iomanip": "cpp",
         "list": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "queue": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "span": "cpp"
     }
 }

@@ -1,5 +1,8 @@
 #include <iostream>
 #include "../Utils/TerminalColors.h"
+#include "../Utils/MergeGrafos.h"
+#include "../Utils/GenerateValidation.h"
+#include <queue>
 
 class GrapMatriz
 {
@@ -7,6 +10,113 @@ class GrapMatriz
         int ** MatrizGrap;
 
     public:
+        bool verificaBipartido(int numVertices)
+        {
+            int *corArray = (int *)calloc(numVertices, sizeof(int *));
+
+            for (int i = 0; i < numVertices; ++i)
+                    corArray[i] = -1;
+            
+
+            queue <int> fila;
+
+            GenerateRandomNum gen;
+            ValidationClass valid(numVertices);
+
+            int contador = numVertices;
+
+            while (!fila.empty() || contador > 0)
+                {
+                    if(fila.empty() && contador > 0)
+                    {
+                        while(true)
+                        {
+                          int gerado = gen.GenerateRandomInt(numVertices-1);
+                          if(valid.Validation[gerado] == 0)
+                          {
+                              fila.push(gerado);
+                              contador--;
+                              corArray[gerado] = 1;
+                              break;
+                          }
+                        }
+                    }
+                    int primeiroFila = fila.front();
+                    fila.pop();
+                    valid.Validation[primeiroFila]++;
+                    
+                    if (MatrizGrap[primeiroFila][primeiroFila] > 0)
+                        return false; 
+
+                    for (int vert = 0; vert < numVertices; vert++)
+                    {
+                        if(MatrizGrap[primeiroFila][vert] > 0)
+                        {
+                            if (corArray[vert] == -1)
+                            {
+                                corArray[vert] = 1 - corArray[primeiroFila];
+                                fila.push(vert);
+                                contador--;
+                            }
+                            else if(corArray[vert] == corArray[primeiroFila])
+                                return false;
+                        }
+                    }
+                }
+
+            return true;
+        }
+        int retornaSubConjuntos(int numVertices)
+        {
+            int numDeGrafos = 1;
+            int ** Grafos;
+
+            Grafos[0] = MatrizGrap[0];
+            for (int j = 1; j < numVertices; j++)
+            {
+                int adicionado = 0;
+                for (int i = 0; i < numDeGrafos; i++)
+                {
+                    if(Grafos[i][j] >= 1)
+                    {
+                        adicionado++;
+                        Grafos[i] = mergeGrafos(numVertices, Grafos[i], MatrizGrap[j]);
+                    }
+                }
+                if(adicionado == 0)
+                {
+                    Grafos[numDeGrafos] = MatrizGrap[j];
+                    numDeGrafos++;
+                }
+                else if(adicionado > 1)
+                {
+                    int GrafoContain = -1;
+                    for(int i = 0; i < numDeGrafos; i++)
+                    {
+                        if(Grafos[i][j]>=1)
+                        {
+                            if(GrafoContain>-1)
+                            {
+                                Grafos[GrafoContain] = mergeGrafos(numVertices, Grafos[GrafoContain], Grafos[i]);
+                                if(i+1 != numDeGrafos)
+                                {
+                                    Grafos[i] = Grafos[numDeGrafos-1];
+                                    free(Grafos[numDeGrafos-1]);
+                                    i--;
+                                }
+                                numDeGrafos--;
+                            }
+                            else
+                            {
+                                GrafoContain = i;
+                            }
+                        }
+                    }    
+                }
+            }
+            free(Grafos);
+            return numDeGrafos;
+        }
         int indentificaGrau(int pontoA, int numVertices, bool tipoGrafo)
         {
             int counter = 0;
