@@ -290,4 +290,16 @@ class GrapMatriz
 
             MatrizGrap = MatrizGrapAux;
         }
+
+        bool verificaRegular(int numVertices, bool tipoGrafo)
+        {
+            GenerateRandomNum gen;
+            int numeroDeGraus = indentificaGrau(gen.GenerateRandomInt(numVertices-1),numVertices,tipoGrafo); 
+            for(int i = 0; i < numVertices; i++)
+            {
+                if(numeroDeGraus != indentificaGrau(i,numVertices,tipoGrafo))
+                    return false;
+            }
+            return true;
+        }
 };

@@ -386,6 +386,36 @@ class GrafTools
             cout << "Adicionado "<< numAdicionar << " vertice";
             if(numAdicionar > 1)
                 cout << "s";
-            cout << " em"<< TerminalColors::Red << adicionado <<endl;    
+            cout << " em "<< TerminalColors::Red << adicionado <<endl;    
+        }
+
+        void verificaRegular()
+        {
+            bool validacao = false;
+            if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+            {
+                validacao = GfMt.verificaRegular(NumVertices, TipoGrafo);
+                if(Print)
+                    GfMt.printaMatriz(NumVertices);
+
+            }
+            if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+            {
+                validacao = GfLs.verificaRegular(NumVertices, TipoGrafo);
+                if(Print)
+                    GfLs.printaLista(NumVertices);
+
+            }  
+
+           if(validacao)
+            {
+                cout << TerminalColors::Green;
+                cout << "O grafo e regular"<< endl;
+            }
+            else
+            { 
+                cout << TerminalColors::Red;
+                cout << "O grafo nao e regular"<< endl; 
+            } 
         }
 };

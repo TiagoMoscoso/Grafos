@@ -247,24 +247,27 @@ class Menu
             cout << TerminalColors::Green;
             cout << "Escolha a opcao dentre as seguintes:" << endl;
             cout << TerminalColors::Yellow;
-            cout << setw(20) << "Criar arresta:" << setw(10) << "(0)" << endl;
-            cout << setw(20) << "Remover arresta:" << setw(10) << "(1)" << endl;
-            if(!Gt.TipoGrafo)
+
+            cout << setw(35) << "Criar arresta:" << setw(5) << "(0)" << endl;
+            cout << setw(35) << "Remover arresta:" << setw(5) << "(1)" << endl;
+            if (!Gt.TipoGrafo)
             {
-                cout << setw(20) << "Identificar vizinhança:" << setw(10) << "(2)" << endl;
+                cout << setw(35) << "Identificar vizinhança:" << setw(5) << "(2)" << endl;
             }
             else
             {
-                cout << setw(20) << "Identificar Sucecao ou Predececao:" << setw(10) << "(2)" << endl;
+                cout << setw(35) << "Identificar Sucecao ou Predececao:" << setw(5) << " (2)" << endl;
             }
-            cout << setw(20) << "Indetifica grau de um vertice:" << setw(10) << "(3)" << endl;
-            cout << setw(20) << "Indetifica se o grafo e simples:" << setw(10) << "(4)" << endl;
-            cout << setw(20) << "Indetifica se o grafo e completo:" << setw(10) << "(5)" << endl;
-            cout << setw(20) << "Indetifica se o grafo e bipartido:" << setw(10) << "(6)" << endl;
-            cout << setw(20) << "Gerar grafo aleatorio:" << setw(10) << "(7)" << endl;
-            cout << setw(20) << "Adiciona vertice:" << setw(10) << "(8)" << endl;
+            cout << setw(35) << "Indetifica grau de um vertice:" << setw(5) << "(3)" << endl;
+            cout << setw(35) << "Indetifica se o grafo e simples:" << setw(5) << "(4)" << endl;
+            cout << setw(35) << "Indetifica se o grafo e completo:" << setw(5) << "(5)" << endl;
+            cout << setw(35) << "Indetifica se o grafo e bipartido:" << setw(5) << "(6)" << endl;
+            cout << setw(35) << "Gerar grafo aleatorio:" << setw(5) << "(7)" << endl;
+            cout << setw(35) << "Adiciona vertice:" << setw(5) << "(8)" << endl;
+            cout << setw(35) << "Identifica se o grafo e regular:" << setw(5) << "(9)" << endl;
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
+
             cout << TerminalColors::White;
             cout << endl;
         }
@@ -315,6 +318,11 @@ class Menu
                     Gt.adicionaVertice(num);
                 }
             }
+        }
+
+        void verificaRegular()
+        {
+            Gt.verificaRegular();
         }
         void criaGrafoAleatorio()
         {
@@ -408,6 +416,9 @@ class Menu
                             break;
                             case 8:
                                 adicionaVertice();
+                            break;
+                            case 9:
+                                verificaRegular();
                             break;
                             default:
                             throw exception();
