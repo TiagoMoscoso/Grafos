@@ -270,9 +270,9 @@ class GrapMatriz
         {
             int ** MatrizGrapAux;
 
-            MatrizGrapAux = (int **)malloc(numVertices+numAdicionar * sizeof(int *));//linhas
-            for (int i = 0; i < numVertices+numAdicionar; i++) {
-                MatrizGrapAux[i] = (int *)malloc(numVertices+numAdicionar * sizeof(int));//colunas
+            MatrizGrapAux = (int **)malloc((numVertices+numAdicionar) * sizeof(int *));//linhas
+            for (int i = 0; i < (numVertices+numAdicionar); i++) {
+                MatrizGrapAux[i] = (int *)malloc((numVertices+numAdicionar) * sizeof(int));//colunas
                 for (int j = 0; j < numVertices+numAdicionar; j++)
                 {
                     if(j >= numVertices || i >= numVertices)
@@ -285,8 +285,6 @@ class GrapMatriz
                     }
                 }
             }
-
-            free(MatrizGrap);
 
             MatrizGrap = MatrizGrapAux;
         }

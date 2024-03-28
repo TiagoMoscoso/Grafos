@@ -272,8 +272,8 @@ class GrafList
         {
             list<int> ** ListGrapAux;
 
-            ListGrapAux = (list<int> **)malloc(numVertices+numAdicionar * sizeof(int *));//colunas
-            for (int i = 0; i < numVertices+numAdicionar; i++)
+            ListGrapAux = (list<int> **)malloc((numVertices+numAdicionar) * sizeof(int *));//colunas
+            for (int i = 0; i < (numVertices+numAdicionar); i++)
             {
                 if(i >= numVertices)
                 {
@@ -285,8 +285,6 @@ class GrafList
                     ListGrapAux[i] = ListGrap[i];   
                 }
             }
-
-            free(ListGrap);
             
             ListGrap = ListGrapAux;
         }
