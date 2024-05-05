@@ -1,15 +1,15 @@
 #include <algorithm>
 #include <iomanip>
 #include "Utils/TerminalColors.h"
-#include "Grafos/GrafTools.cpp"
+#include "Grafos\AdvancedFunctions\GrafToolsAdvanced.cpp"
 #include "Utils/GetPoints.h"
 #include <string>
 
 
 class Menu
 {   private:
-        GrafTools Gt;
-
+        GrafToolsAdvanced Gt;
+        bool advancedFunc = true;
     public:
 
         void setPrint()
@@ -265,6 +265,10 @@ class Menu
             cout << setw(35) << "Gerar grafo aleatorio:" << setw(5) << "(7)" << endl;
             cout << setw(35) << "Adiciona vertice:" << setw(5) << "(8)" << endl;
             cout << setw(35) << "Identifica se o grafo e regular:" << setw(5) << "(9)" << endl;
+            if(advancedFunc)
+            {
+                cout << setw(35) << "Busca Profundidade:" << setw(5) << "(10)" << endl;
+            }
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
 
@@ -323,6 +327,33 @@ class Menu
         void verificaRegular()
         {
             Gt.verificaRegular();
+        }
+
+        void buscaProfundidade()
+        {
+            cout << TerminalColors::Green;
+            cout << "Entre com o vertice que deseja realizar a busca em profundidade:" << endl;
+            cout << TerminalColors::White;
+            int num = -1;
+            while(num < 0 || num >= Gt.NumVertices)
+            {
+                cin >> num;
+                if(num < 0)
+                {
+                    cout << TerminalColors::Red;
+                    cout << "O numero deve ser maior ou igual a 0:" << endl; 
+                }
+                else if(num >= Gt.NumVertices)
+                {
+                    cout << TerminalColors::Red;
+                    cout << "O numero deve ser menor que " << Gt.NumVertices <<":"  << endl; 
+                }
+                else
+                {
+                    Gt.buscaProfundidade(num);
+                }
+                cout << TerminalColors::White;
+            }
         }
         void criaGrafoAleatorio()
         {
@@ -419,6 +450,9 @@ class Menu
                             break;
                             case 9:
                                 verificaRegular();
+                            break;
+                            case 10:
+                                buscaProfundidade();
                             break;
                             default:
                             throw exception();

@@ -7,7 +7,7 @@
 
 class GrafList
 {
-    private:
+    protected:
         list<int> ** ListGrap; //ListGrap[i]->push_back(2); to add
     public:
         bool verificaBipartido(int numVertices)

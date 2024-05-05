@@ -1,3 +1,5 @@
+#ifndef GENERATE_RANDOM_NUM_H
+#define GENERATE_RANDOM_NUM_H
 #include <stdlib.h>
 
 #include <iostream>
@@ -20,3 +22,4 @@ class GenerateRandomNum
         return dis(gen);
     }
 };
+#endif // GENERATE_RANDOM_NUM_H

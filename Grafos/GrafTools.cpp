@@ -1,13 +1,13 @@
 
-#include "GrafList.cpp"
-#include "GrafMatriz.cpp"
+#include "AdvancedFunctions\GrafListAdvanced.cpp"
+#include "AdvancedFunctions\GrafMatrizAdvanced.cpp"
 #include <random>
 
 class GrafTools
 {
-    private:
-    GrafList GfLs;
-    GrapMatriz GfMt;
+    protected:
+    GrafListAdvanced GfLs;
+    GrafMatrizAdvanced GfMt;
     bool Print = false;
     public:
         int NumVertices = 0;

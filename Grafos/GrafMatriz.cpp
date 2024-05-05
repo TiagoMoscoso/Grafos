@@ -3,6 +3,7 @@
 #include "../Utils/MergeGrafos.h"
 #include "../Utils/GenerateValidation.h"
 #include <queue>
+#include "../Utils/GenerateRandomNum.h"
 
 class GrapMatriz
 {
