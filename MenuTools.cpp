@@ -267,7 +267,8 @@ class Menu
             cout << setw(35) << "Identifica se o grafo e regular:" << setw(5) << "(9)" << endl;
             if(advancedFunc)
             {
-                cout << setw(35) << "Busca Profundidade:" << setw(5) << "(10)" << endl;
+                cout << setw(35) << "Busca em Largura:" << setw(5) << "(10)" << endl;
+                cout << setw(35) << "Busca em Profundidade:" << setw(5) << "(11)" << endl;
             }
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
@@ -327,6 +328,33 @@ class Menu
         void verificaRegular()
         {
             Gt.verificaRegular();
+        }
+
+        void buscaLargura()
+        {
+            cout << TerminalColors::Green;
+            cout << "Entre com o vertice que deseja realizar a busca em largura:" << endl;
+            cout << TerminalColors::White;
+            int num = -1;
+            while(num < 0 || num >= Gt.NumVertices)
+            {
+                cin >> num;
+                if(num < 0)
+                {
+                    cout << TerminalColors::Red;
+                    cout << "O numero deve ser maior ou igual a 0:" << endl; 
+                }
+                else if(num >= Gt.NumVertices)
+                {
+                    cout << TerminalColors::Red;
+                    cout << "O numero deve ser menor que " << Gt.NumVertices <<":"  << endl; 
+                }
+                else
+                {
+                    Gt.buscaLargura(num);
+                }
+                cout << TerminalColors::White;
+            }
         }
 
         void buscaProfundidade()
@@ -452,6 +480,9 @@ class Menu
                                 verificaRegular();
                             break;
                             case 10:
+                                buscaLargura();
+                            break;
+                            case 11:
                                 buscaProfundidade();
                             break;
                             default:

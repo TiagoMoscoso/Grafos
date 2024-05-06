@@ -67,6 +67,7 @@
         "ranges": "cpp",
         "set": "cpp",
         "span": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "stack": "cpp"
     }
 }

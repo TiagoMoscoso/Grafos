@@ -7,7 +7,7 @@
 
 class GrapMatriz
 {
-    private:
+    protected:
         int ** MatrizGrap;
 
     public:
