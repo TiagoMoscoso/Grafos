@@ -57,6 +57,35 @@ class GrafListAdvanced : public GrafList
             }
             control.push(verticeAux);
         }
+        
+        return control;
+    }
+
+    queue<int> ordenacaoTopologica(int numVertices)
+    {
+        queue<int> control;
+
+        list<int>** auxGrafList = copyList(ListGrap,numVertices);
+        int toBevisited = numVertices;
+        int tentativas = numVertices;
+
+        ValidationClass val = ValidationClass(numVertices);
+        
+        while(toBevisited > 0 && tentativas > 0)
+        {
+            for(int i = 0; i < numVertices; i++)
+            {
+                if(val.Validation[i] == 0 && frequencyInTheList(i,numVertices,auxGrafList)==1)
+                {
+                    val.Validation[i]++;
+                    auxGrafList = cleanItemList(i, numVertices,auxGrafList);
+                    control.push(i);
+                    toBevisited--;
+                }
+            }
+            tentativas--;
+        }
+
 
         return control;
     }

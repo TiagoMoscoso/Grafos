@@ -9,6 +9,7 @@ class points
     static vector<int> getPontos(int numVertices)
     {
         vector<int> pontos = {-1,-1};
+        bool pontoAvalido = false;
         while(pontos[0] == -1 || pontos[1] == -1)
         {
             if(pontos[0] == -1)
@@ -27,6 +28,7 @@ class points
                         pontos[0]  = -1;
                         throw exception();
                     }
+                    pontoAvalido = true;
                 }
                 catch(exception ex)
                 {
@@ -35,7 +37,7 @@ class points
                     cout << TerminalColors::White;
                 }
             }
-            if(pontos[1] == -1)
+            if(pontos[1] == -1 && pontoAvalido)
             {
                 try
                 {

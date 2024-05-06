@@ -269,6 +269,10 @@ class Menu
             {
                 cout << setw(35) << "Busca em Largura:" << setw(5) << "(10)" << endl;
                 cout << setw(35) << "Busca em Profundidade:" << setw(5) << "(11)" << endl;
+                if(Gt.TipoGrafo)
+                {
+                    cout << setw(35) << "Ordenacao topologica:" << setw(5) << "(12)" << endl;
+                }
             }
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
@@ -383,6 +387,11 @@ class Menu
                 cout << TerminalColors::White;
             }
         }
+
+        void ordenacaoTopologica()
+        {
+            Gt.ordenacaoTopologica();
+        }
         void criaGrafoAleatorio()
         {
             int numArrestas = -1;
@@ -484,6 +493,9 @@ class Menu
                             break;
                             case 11:
                                 buscaProfundidade();
+                            break;
+                            case 12:
+                                ordenacaoTopologica();
                             break;
                             default:
                             throw exception();

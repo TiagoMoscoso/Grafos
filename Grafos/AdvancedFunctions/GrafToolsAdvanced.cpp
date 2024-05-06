@@ -67,4 +67,31 @@ class GrafToolsAdvanced : public GrafTools
         }
         
     }
+
+    
+    void ordenacaoTopologica()
+    {
+        queue<int> ordenacao;
+        if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+        {
+            ordenacao = GfMt.ordenacaoTopologica(NumVertices);
+            if(Print)
+                GfMt.printaMatriz(NumVertices);
+        }
+
+        if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+        {
+            ordenacao = GfLs.ordenacaoTopologica(NumVertices);
+            if(Print)
+                GfLs.printaLista(NumVertices);
+        }
+        cout << endl;
+        cout << TerminalColors::Green;
+        while (!ordenacao.empty())
+        {
+            std::cout<<"[" << ordenacao.front() << "] -->";
+            ordenacao.pop();
+        }
+        cout << endl;
+    }
 };

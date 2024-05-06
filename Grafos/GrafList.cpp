@@ -4,7 +4,10 @@
 #include "../Utils/GenerateValidation.h"
 #include <queue>
 #include "../Utils/GenerateRandomNum.h"
-
+#include "../Utils/FrequencyInList.h"
+#include "../Utils/RemoveItemList.h"
+#include "../Utils/Cleanlist.h"
+#include "../Utils/CopyList.h"
 class GrafList
 {
     protected:

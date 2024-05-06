@@ -4,6 +4,11 @@
 #include "../Utils/GenerateValidation.h"
 #include <queue>
 #include "../Utils/GenerateRandomNum.h"
+#include "../Utils/CleanCollum.h"
+#include "../Utils/SumLine.h"
+#include "../Utils/SumCollum.h"
+#include "../Utils/CleanLine.h"
+#include "../Utils/CopyMatrix.h"
 
 class GrapMatriz
 {

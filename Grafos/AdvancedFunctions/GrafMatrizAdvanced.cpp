@@ -1,5 +1,6 @@
 #include "../GrafMatriz.cpp"
 #include <stack>
+
 class GrafMatrizAdvanced : public GrapMatriz
 {
     public:
@@ -62,4 +63,35 @@ class GrafMatrizAdvanced : public GrapMatriz
 
         return control;
     }
+
+
+    queue<int> ordenacaoTopologica(int numVertices)
+    {
+        queue<int> control;
+
+        int** auxGrafMat = copyMatrix(MatrizGrap,numVertices);
+        int toBevisited = numVertices;
+        int tentativas = numVertices;
+
+        ValidationClass val = ValidationClass(numVertices);
+        
+        while(toBevisited > 0 && tentativas > 0)
+        {
+            for(int i = 0; i < numVertices; i++)
+            {
+                if(val.Validation[i] == 0 && sumCollum(numVertices,i,auxGrafMat)==0)
+                {
+                    val.Validation[i]++;
+                    auxGrafMat = cleanLine(numVertices, i,auxGrafMat);
+                    control.push(i);
+                    toBevisited--;
+                }
+            }
+            tentativas--;
+        }
+
+
+        return control;
+    }
+    
 };
