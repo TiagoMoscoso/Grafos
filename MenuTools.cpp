@@ -248,8 +248,8 @@ class Menu
             cout << "Escolha a opcao dentre as seguintes:" << endl;
             cout << TerminalColors::Yellow;
 
-            cout << setw(35) << "Criar arresta:" << setw(5) << "(0)" << endl;
-            cout << setw(35) << "Remover arresta:" << setw(5) << "(1)" << endl;
+            cout << setw(35) << "Criar aresta:" << setw(5) << "(0)" << endl;
+            cout << setw(35) << "Remover aresta:" << setw(5) << "(1)" << endl;
             if (!Gt.TipoGrafo)
             {
                 cout << setw(35) << "Identificar vizinhança:" << setw(5) << "(2)" << endl;
@@ -281,31 +281,38 @@ class Menu
             cout << endl;
         }
 
-        void adicionaArresta()
+        void adicionaAresta()
         {
             cout << TerminalColors::Green;
-            cout << "Entre com os pontos para adicionar uma arresta:" << endl;
+            cout << "Entre com os pontos para adicionar uma aresta:" << endl;
             cout << TerminalColors::White;
             vector<int> pontos =  points::getPontos(Gt.NumVertices);
-            Gt.adicionaArresta(pontos[0], pontos[1]);
+            int valueAresta = 1;
+            if(Gt.Ponderado)
+            {
+              cout << "Qual valor ponderado da aresta?" << endl; 
+              cin >> valueAresta;
+            }
+
+            Gt.adicionaAresta(pontos[0], pontos[1],valueAresta);
         }
 
         void identificaGrauDoVertice()
         {
             cout << TerminalColors::Green;
-            cout << "Entre com os pontos para adicionar uma arresta:" << endl;
+            cout << "Entre com os pontos para adicionar uma aresta:" << endl;
             cout << TerminalColors::White;
             int ponto =  points::getPonto(Gt.NumVertices);
             Gt.indentificacaoGrau(ponto);
         }
 
-        void removeArresta()
+        void removeAresta()
         {
             cout << TerminalColors::Green;
-            cout << "Entre com os pontos para remover uma arresta:" << endl;
+            cout << "Entre com os pontos para remover uma aresta:" << endl;
             cout << TerminalColors::White;
             vector<int> pontos =  points::getPontos(Gt.NumVertices);
-            Gt.removeArresta(pontos[0], pontos[1]);   
+            Gt.removeAresta(pontos[0], pontos[1]);   
         }
 
         void adicionaVertice()
@@ -394,11 +401,11 @@ class Menu
         }
         void criaGrafoAleatorio()
         {
-            int numArrestas = -1;
+            int numArestas = -1;
             cout << TerminalColors::Green;
-            cout << "Entre com o numero de arrestas para gerar o grafo aleatorio:" << endl;
+            cout << "Entre com o numero de arestas para gerar o grafo aleatorio:" << endl;
             cout << TerminalColors::White;
-            while(numArrestas < 0)
+            while(numArestas < 0)
             {
                 try
                 {
@@ -407,9 +414,9 @@ class Menu
                     cout << TerminalColors::White;
                     cin>> auxiliarNumVet;
 
-                    numArrestas = stoi(auxiliarNumVet);
+                    numArestas = stoi(auxiliarNumVet);
 
-                    if(numArrestas <= 0)
+                    if(numArestas <= 0)
                     {
                         cout << TerminalColors::Red;
                         cout << "O numero deve ser maior ou igual a 0" << endl;
@@ -421,8 +428,48 @@ class Menu
                     cout << "Deve inserir apenas numeros inteiros!!!" << endl;
                 }
             }
-            Gt.criaGrafoAleatorio(numArrestas);
+            Gt.criaGrafoAleatorio(numArestas);
         }
+
+        void setPonderado()
+        {
+            cout << TerminalColors::Green;
+            cout << "Voce deseja usar a funcao de o grafo ponderado?" << endl;
+
+            string auxiliarNumVet = "";
+            while(auxiliarNumVet == "")
+            {
+
+                cout << TerminalColors::White;
+                cin>> auxiliarNumVet;
+                    
+                transform(auxiliarNumVet.begin(), auxiliarNumVet.end(), auxiliarNumVet.begin(), ::tolower);
+
+                if(auxiliarNumVet == "sim" || auxiliarNumVet == "1")
+                {
+                    Gt.setPonderador();
+                    cout << TerminalColors::Green;
+                    cout << "Ponderado ativado" << endl;
+                }
+                else if(auxiliarNumVet == "nao" || auxiliarNumVet == "0")
+                {
+                    cout << TerminalColors::Green;
+                    cout << "Ponderado desativado" << endl;
+                }
+                else
+                {
+                    cout << TerminalColors::Red;
+                    cout << "Resultado invalido" << endl;
+                    cout << TerminalColors::Yellow;
+                    cout << setw(20) << "Ponderado:" << setw(10) << "(sim) ou (1)" << endl;
+                    cout << setw(20) << "Nao Ponderado:" << setw(10) << "(nao) ou (0)" << endl;
+                    auxiliarNumVet = "";
+                }
+
+                cout << endl;
+            }
+        }
+
         void startEmulator()
         {
             setNumVertices();
@@ -430,6 +477,8 @@ class Menu
             setTipoEstrutura();
 
             setTipoGrafo();
+
+            setPonderado();
 
             setPrint();
 
@@ -452,10 +501,10 @@ class Menu
                         switch(opcaoMenu)
                         {
                             case 0:
-                                adicionaArresta();
+                                adicionaAresta();
                             break;
                             case 1:
-                                removeArresta();
+                                removeAresta();
                             break;
                             case 2:
                                 if(!Gt.TipoGrafo)

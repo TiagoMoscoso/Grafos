@@ -20,10 +20,10 @@ class GrafListAdvanced : public GrafList
 
             for (auto it = ++ListGrap[verticeAux]->begin(); it != ListGrap[verticeAux]->end(); ++it) 
             {
-                if(val.Validation[*it] == 0)
+                if(val.Validation[it->vertice] == 0)
                 {
-                    queue.push(*it);
-                    val.Validation[*it]++;
+                    queue.push(it->vertice);
+                    val.Validation[it->vertice]++;
                 }
             }
             control.push(verticeAux);
@@ -49,10 +49,10 @@ class GrafListAdvanced : public GrafList
 
             for (auto it = ++ListGrap[verticeAux]->begin(); it != ListGrap[verticeAux]->end(); ++it) 
             {
-                if(val.Validation[*it] == 0)
+                if(val.Validation[it->vertice] == 0)
                 {
-                    stack.push(*it);
-                    val.Validation[*it]++;
+                    stack.push(it->vertice);
+                    val.Validation[it->vertice]++;
                 }
             }
             control.push(verticeAux);
@@ -65,7 +65,7 @@ class GrafListAdvanced : public GrafList
     {
         queue<int> control;
 
-        list<int>** auxGrafList = copyList(ListGrap,numVertices);
+        list<ListClass>** auxGrafList = copyList(ListGrap,numVertices);
         int toBevisited = numVertices;
         int tentativas = numVertices;
 

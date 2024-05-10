@@ -8,10 +8,12 @@
 #include "../Utils/RemoveItemList.h"
 #include "../Utils/Cleanlist.h"
 #include "../Utils/CopyList.h"
+#include "ListClass.cpp"
+
 class GrafList
 {
     protected:
-        list<int> ** ListGrap; //ListGrap[i]->push_back(2); to add
+        list<ListClass> ** ListGrap; //ListGrap[i]->push_back(2); to add
     public:
         bool verificaBipartido(int numVertices)
         {
@@ -49,15 +51,15 @@ class GrafList
             
                         for (auto vert = ++ListGrap[primeiroFila]->begin(); vert != ListGrap[primeiroFila]->end(); ++vert) 
                         {
-                            if(primeiroFila == *vert)
+                            if(primeiroFila == vert->vertice)
                                 return false;
-                            if (corArray[*vert] == -1)
+                            if (corArray[vert->vertice] == -1)
                             {
-                                corArray[*vert] = 1 - corArray[primeiroFila];
-                                fila.push(*vert);
+                                corArray[vert->vertice] = 1 - corArray[primeiroFila];
+                                fila.push(vert->vertice);
                                 contador--;
                             }
-                            else if(corArray[*vert] == corArray[primeiroFila])
+                            else if(corArray[vert->vertice] == corArray[primeiroFila])
                                 return false;
                         }
             }
@@ -72,8 +74,8 @@ class GrafList
                 valid.resetValidation(numVertices);
                 for (auto it = ++ListGrap[i]->begin(); it != ListGrap[i]->end(); ++it) 
                 {
-                    valid.Validation[*it]++;
-                    if(valid.Validation[*it] > 1 || *it == i)
+                    valid.Validation[it->vertice]++;
+                    if(valid.Validation[it->vertice] > 1 || it->vertice == i)
                     {
                         free(valid.Validation);
                         return false;
@@ -95,7 +97,7 @@ class GrafList
                     valid.resetValidation(numVertices);
                     for (auto it = ++ListGrap[i]->begin(); it != ListGrap[i]->end(); ++it)
                     {
-                        valid.Validation[*it]++;
+                        valid.Validation[it->vertice]++;
                     } 
                     for(int j = 0; j < numVertices; j++)
                     {
@@ -113,7 +115,7 @@ class GrafList
                     valid.resetValidation(numVertices);
                     for (auto it = ++ListGrap[i]->begin(); it != ListGrap[i]->end(); ++it)
                     {
-                        valid.Validation[*it]++;
+                        valid.Validation[it->vertice]++;
                     }
                     
                     for(int j = 0; j < numVertices; j++)
@@ -123,7 +125,7 @@ class GrafList
                             bool localValidation = false;
                             for (auto it = ++ListGrap[j]->begin(); it != ListGrap[j]->end(); ++it)
                             {
-                                if(*it == i) localValidation = true;
+                                if(it->vertice == i) localValidation = true;
                             }
                             
                             if(!localValidation)
@@ -149,7 +151,7 @@ class GrafList
             int counter = 0;
             for (auto it = ++ListGrap[pontoA]->begin(); it != ListGrap[pontoA]->end(); ++it) 
             {
-                if (*it == pontoA)
+                if (it->vertice == pontoA)
                 {
                     counter++;
                 }
@@ -163,7 +165,7 @@ class GrafList
                     {
                         for (auto it = ListGrap[x]->begin(); it != ListGrap[x]->end(); ++it) 
                         {
-                            if (*it == pontoA)
+                            if (it->vertice == pontoA)
                             {
                                 counter++;
                             }
@@ -174,34 +176,35 @@ class GrafList
             return counter;
         }
 
-        bool indentificaSuce(int pontoA,int pontoB,int numVertices)
+        bool indentificaPrede(int pontoA,int pontoB,int numVertices)
         {
             for (auto it = ++ListGrap[pontoA]->begin(); it != ListGrap[pontoA]->end(); ++it) 
             {
-                if(*it == pontoB)
+                if(it->vertice== pontoB)
                 {
                     return true;
                 }
             }
             return false;
         }
-        bool indentificaPrede(int pontoA,int pontoB,int numVertices)
+        bool indentificaSuce(int pontoA,int pontoB,int numVertices)
         {
+            //todo
             for (auto it = ++ListGrap[pontoB]->begin(); it != ListGrap[pontoB]->end(); ++it) 
             {
-                if(*it == pontoA)
+                if(it->vertice == pontoA)
                 {
                     return true;
                 }
             }
             return false;
         }
-        void removeArresta(int pontoA, int pontoB, bool tipoGrafo)
+        void removeAresta(int pontoA, int pontoB, bool tipoGrafo)
         {
             
             for (auto it = ++ListGrap[pontoA]->begin(); it != ListGrap[pontoA]->end(); ++it) 
             {
-                if(*it == pontoB)
+                if(it->vertice == pontoB)
                 {
                     ListGrap[pontoA]->erase(it);
                     break;
@@ -213,7 +216,7 @@ class GrafList
             {
                 for (auto it = ++ListGrap[pontoB]->begin(); it != ListGrap[pontoB]->end(); ++it) 
                 {
-                    if(*it == pontoA)
+                    if(it->vertice == pontoA)
                     {
                         ListGrap[pontoB]->erase(it);
                         break;
@@ -222,26 +225,26 @@ class GrafList
             }
         }
 
-        void adicionaArresta(int pontoA, int pontoB, bool tipoGrafo)
+        void adicionaAresta(int pontoA, int pontoB, bool tipoGrafo, int valueAresta)
         {
-            ListGrap[pontoA]->push_back(pontoB);
+            ListGrap[pontoA]->push_back(ListClass(pontoB,valueAresta));
 
             if(!tipoGrafo && pontoA != pontoB)
-                ListGrap[pontoB]->push_back(pontoA);
+                ListGrap[pontoB]->push_back(ListClass(pontoA,valueAresta));
         }
 
 
         void aumentaTamanho(int numVertices)
         {
-            ListGrap = (list<int> **)malloc(numVertices * sizeof(int *));//colunas
+            ListGrap = (list<ListClass> **)malloc(numVertices * sizeof(int *));//colunas
             for (int i = 0; i < numVertices; i++)
             {
-                ListGrap[i] = new list<int>;
+                ListGrap[i] = new list<ListClass>;
                 ListGrap[i]->insert(ListGrap[i]->begin(), i);
             }
         }
 
-        void printaLista(int numVertices)
+        void printaLista(int numVertices, bool ponderado)
         {
             for (int i = 0; i < numVertices; i++)
             {
@@ -249,9 +252,25 @@ class GrafList
                 for (auto it = ListGrap[i]->begin(); it != ListGrap[i]->end(); ++it) 
                 {
                     if(numVertices < 10 ||  i >= 10 )
-                        cout << "[" << *it << "] -->";
+                    {
+                        if(ponderado && it != ListGrap[i]->begin())
+                        {
+                            cout << TerminalColors::Red;
+                            cout << "{" << it->peso << "}->";
+                            cout << TerminalColors::White;
+                        }
+                        cout << "[" << it->vertice << "] -->";
+                    }
                     else
-                        cout << "[ " << *it << "] -->";
+                    {
+                        if(ponderado && it != ListGrap[i]->begin())
+                        {
+                            cout << TerminalColors::Red;
+                            cout << "{" << it->peso << "}->";
+                            cout << TerminalColors::White;
+                        }
+                        cout << "[ " << it->vertice << "] -->";
+                    }
                     cout << TerminalColors::White;
                 }
                 cout<< endl;
@@ -263,7 +282,7 @@ class GrafList
         {
             for (auto it = ++ListGrap[pontoA]->begin(); it != ListGrap[pontoA]->end(); ++it) 
             {
-                if(*it == pontoB)
+                if(it->vertice == pontoB)
                 {
                     return true;
                 }
@@ -273,14 +292,14 @@ class GrafList
 
         void adicionaVertice(int numVertices, int numAdicionar)
         {
-            list<int> ** ListGrapAux;
+            list<ListClass> ** ListGrapAux;
 
-            ListGrapAux = (list<int> **)malloc((numVertices+numAdicionar) * sizeof(int *));//colunas
+            ListGrapAux = (list<ListClass> **)malloc((numVertices+numAdicionar) * sizeof(int *));//colunas
             for (int i = 0; i < (numVertices+numAdicionar); i++)
             {
                 if(i >= numVertices)
                 {
-                    ListGrapAux[i] = new list<int>;
+                    ListGrapAux[i] = new list<ListClass>;
                     ListGrapAux[i]->insert(ListGrapAux[i]->begin(), i);
                 }
                 else

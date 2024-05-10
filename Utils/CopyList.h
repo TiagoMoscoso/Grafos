@@ -1,14 +1,15 @@
 #include <iostream>
 #include <list>
+#include "..\Grafos\ListClass.cpp"
 using namespace std;
 
 
-list<int>** copyList(list<int>** original, int tamanho) {
-    list<int>** copia = (list<int> **)malloc(tamanho * sizeof(int *));
+list<ListClass>** copyList(list<ListClass>** original, int tamanho) {
+    list<ListClass>** copia = (list<ListClass> **)malloc(tamanho * sizeof(ListClass *));
 
     for (int i = 0; i < tamanho; i++)
     {
-        copia[i] = new list<int>;
+        copia[i] = new list<ListClass>;
 
         for(auto it = original[i]->begin(); it != original[i]->end(); it++)
         {

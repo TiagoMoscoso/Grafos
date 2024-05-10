@@ -205,22 +205,33 @@ class GrapMatriz
             return false;
         }
 
-        void removeArresta(int pontoA, int pontoB, bool tipoGrafo)
+        void removeAresta(int pontoA, int pontoB, bool tipoGrafo,bool ponderado)
         {
             if(MatrizGrap[pontoA][pontoB] > 0)
-                MatrizGrap[pontoA][pontoB]--;
+            {
+                if(ponderado)
+                    MatrizGrap[pontoA][pontoB] = 0;
+                else
+                    MatrizGrap[pontoA][pontoB]--;
+            }
 
             if(!tipoGrafo && MatrizGrap[pontoB][pontoA] > 0)
-                MatrizGrap[pontoB][pontoA]--;
+            {
+                if(ponderado)
+                    MatrizGrap[pontoA][pontoB] = 0;
+                else
+                    MatrizGrap[pontoA][pontoB]--;
+            }
                 
         }
 
-        void adicionaArresta(int pontoA, int pontoB, bool tipoGrafo)
+        void adicionaAresta(int pontoA, int pontoB, bool tipoGrafo, int valueAresta)
         {
-            MatrizGrap[pontoA][pontoB]++;
+            
+            MatrizGrap[pontoA][pontoB] = valueAresta;
 
             if(!tipoGrafo && pontoA != pontoB)
-                MatrizGrap[pontoB][pontoA]++;
+                MatrizGrap[pontoB][pontoA] = valueAresta;
         }
 
         void aumentaTamanho(int numVertices)

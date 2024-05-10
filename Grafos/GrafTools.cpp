@@ -13,10 +13,16 @@ class GrafTools
         int NumVertices = 0;
         short TipoDeEstrutura = -1;//0 matriz, 1 lista, 2 matriz e lista
         bool TipoGrafo;// true direcionado, false nao direcionado
+        bool Ponderado = false;
         
         void setPrint()
         {
             Print = !Print;
+        }
+
+        void setPonderador()
+        {
+            Ponderado = !Ponderado;
         }
 
         void verificaBipartido()
@@ -33,7 +39,7 @@ class GrafTools
             {
                 validacao = GfLs.verificaBipartido(NumVertices);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,NumVertices);
                 cout << endl;
             }
 
@@ -66,48 +72,58 @@ class GrafTools
             {
                 GfLs.aumentaTamanho(NumVertices);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,NumVertices);
                 cout << TerminalColors::Green;
                 cout << "Lista criada com sucesso." << endl;
                 cout << endl;
             }
         }
 
-        void adicionaArresta(int pontoA, int pontoB)
+        void adicionaAresta(int pontoA, int pontoB, int valueAresta)
         {
             if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
             {
-                GfMt.adicionaArresta(pontoA,pontoB,TipoGrafo);
+                GfMt.adicionaAresta(pontoA,pontoB,TipoGrafo,valueAresta);
                 if(Print)
                     GfMt.printaMatriz(NumVertices);
                 cout << endl;
             }
             if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
             {
-                GfLs.adicionaArresta(pontoA,pontoB,TipoGrafo);
+                GfLs.adicionaAresta(pontoA,pontoB,TipoGrafo,valueAresta);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,NumVertices);
                 cout << endl;
             }
         }
 
-        void criaGrafoAleatorio(int numArresta)
+        void criaGrafoAleatorio(int numAresta)
         {
             random_device rd;
             mt19937 gerador(rd());
             uniform_int_distribution<int> distribuicao(0, NumVertices-1);
-            for(int i = 0; i < numArresta; i++)
+            uniform_int_distribution<int> ponderador(-10, 10);
+            for(int i = 0; i < numAresta; i++)
             {
                 int pontoA = distribuicao(gerador);
                 int pontoB = distribuicao(gerador);
+                int value = 1;
+                if(Ponderado)
+                {
+                    value = ponderador(gerador);
+                    if(value == 0)
+                        value = 1;
+                }
 
                 if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
                 {
-                    GfMt.adicionaArresta(pontoA,pontoB,TipoGrafo);
+                    GfMt.adicionaAresta(pontoA,pontoB,TipoGrafo,value);
+                    //todo ponderado
                 }
                 if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
                 {
-                    GfLs.adicionaArresta(pontoA,pontoB,TipoGrafo);
+                    GfLs.adicionaAresta(pontoA,pontoB,TipoGrafo,value);
+                    //todo ponderado
                 }
             }
 
@@ -120,7 +136,7 @@ class GrafTools
             if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
             {
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout << endl;
             }
             cout << TerminalColors::Green;
@@ -128,20 +144,20 @@ class GrafTools
             cout << endl;
             cout << TerminalColors::White;
         }
-        void removeArresta(int pontoA, int pontoB)
+        void removeAresta(int pontoA, int pontoB)
         {
             if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
             {
-                GfMt.removeArresta(pontoA,pontoB,TipoGrafo);
+                GfMt.removeAresta(pontoA,pontoB,TipoGrafo,Ponderado);
                 if(Print)
                     GfMt.printaMatriz(NumVertices);
                 cout << endl;
             }
             if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
             {
-                GfLs.removeArresta(pontoA,pontoB,TipoGrafo);
+                GfLs.removeAresta(pontoA,pontoB,TipoGrafo);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout << endl;
             }
         
@@ -161,7 +177,7 @@ class GrafTools
             {
                 validacao = GfLs.indentificaVizi(pontoA,pontoB,NumVertices);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout << endl;
             }
 
@@ -195,7 +211,7 @@ class GrafTools
             {
                 validacao = GfLs.indentificaPrede(pontoA,pontoB,NumVertices);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout << endl;
             }
 
@@ -228,7 +244,7 @@ class GrafTools
             {
                 validacao = GfLs.indentificaSuce(pontoA,pontoB,NumVertices);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout << endl;
             }
 
@@ -264,7 +280,7 @@ class GrafTools
             {
                 validacao = GfLs.indentificaGrau(pontoA,NumVertices,TipoGrafo);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout<< TerminalColors::Red;
                 cout<< "( Lista )";
                 cout << TerminalColors::Green;
@@ -300,7 +316,7 @@ class GrafTools
             {
                 validacao = GfLs.indentificaSimples(NumVertices);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout<< TerminalColors::Red;
                 cout<< "( Lista )";
                 if(validacao)
@@ -343,7 +359,7 @@ class GrafTools
             {
                 validacao = GfLs.identificaCompleto(NumVertices,TipoGrafo);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
                 cout<< TerminalColors::Red;
                 cout<< "( Lista )";
                 if(validacao)
@@ -378,7 +394,7 @@ class GrafTools
             {
                 GfLs.adicionaVertice(NumVertices,numAdicionar);
                 if(Print)
-                    GfLs.printaLista(NumVertices+numAdicionar);
+                    GfLs.printaLista(NumVertices+numAdicionar,Ponderado);
                 adicionado += "Lista";
             }
             NumVertices+=numAdicionar;
@@ -403,7 +419,7 @@ class GrafTools
             {
                 validacao = GfLs.verificaRegular(NumVertices, TipoGrafo);
                 if(Print)
-                    GfLs.printaLista(NumVertices);
+                    GfLs.printaLista(NumVertices,Ponderado);
 
             }  
 

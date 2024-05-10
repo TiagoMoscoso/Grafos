@@ -17,7 +17,7 @@ class GrafToolsAdvanced : public GrafTools
         {
             largura = GfLs.buscaLargura(vertice, NumVertices);
             if(Print)
-                GfLs.printaLista(NumVertices);
+                GfLs.printaLista(NumVertices,Ponderado);
         }
             
         cout << TerminalColors::Green;
@@ -50,7 +50,7 @@ class GrafToolsAdvanced : public GrafTools
         {
             profundidade = GfLs.buscaProfundidade(vertice, NumVertices);
             if(Print)
-                GfLs.printaLista(NumVertices);
+                GfLs.printaLista(NumVertices,Ponderado);
         }
             
         cout << TerminalColors::Green;
@@ -83,7 +83,7 @@ class GrafToolsAdvanced : public GrafTools
         {
             ordenacao = GfLs.ordenacaoTopologica(NumVertices);
             if(Print)
-                GfLs.printaLista(NumVertices);
+                GfLs.printaLista(NumVertices,Ponderado);
         }
         cout << endl;
         cout << TerminalColors::Green;
