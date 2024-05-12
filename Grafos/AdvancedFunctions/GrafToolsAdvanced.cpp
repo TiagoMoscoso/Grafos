@@ -35,6 +35,90 @@ class GrafToolsAdvanced : public GrafTools
         
     }
 
+    void dijkstra(int pontoA, int pontoB)
+    {
+        int dist;
+
+        if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+        {
+            dist = GfMt.dijkstra(pontoA,pontoB,NumVertices);
+            cout << dist << endl;
+            if(Print)
+                GfMt.printaMatriz(NumVertices);
+
+        }
+        if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+        {
+            dist = GfLs.dijkstra(pontoA,pontoB,NumVertices);
+            cout << dist << endl;
+            if(Print)
+                GfLs.printaLista(NumVertices,Ponderado);
+        }
+        if(dist>0)
+        {
+            cout << TerminalColors::Green;
+            cout << "dist: " << dist << endl;
+        }
+        else
+        {
+            cout << TerminalColors::Red;
+            cout << "nao foi possivel estabelecer uma distancia minima entre os dois" << endl;
+        }
+    }
+
+    void kruskal()
+    {
+        if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+        {
+            ValidationClass arvoreGerMin = GfMt.kruskal(1, 2,NumVertices,TipoGrafo);  
+            if(Print)
+                GfMt.printaMatriz(NumVertices);
+
+            arvoreGerMin.printValidation(NumVertices);
+
+        }
+        if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+        {
+            ValidationClass arvoreGerMin = GfLs.kruskal(1, 2,NumVertices,TipoGrafo);
+            if(Print)
+                GfLs.printaLista(NumVertices,Ponderado);
+
+            arvoreGerMin.printValidation(NumVertices);
+        }
+    }
+
+    void grafoConexo()
+    {
+        bool conexo = false;
+        if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
+        {
+            conexo = GfMt.grafoConexo(NumVertices);
+            if(Print)
+                GfMt.printaMatriz(NumVertices);
+
+        }
+        if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
+        {
+            conexo =  GfLs.grafoConexo(NumVertices);
+            if(Print)
+                GfLs.printaLista(NumVertices,Ponderado);
+        }
+
+        if(conexo)
+        {
+            cout << TerminalColors::Green;
+            cout << "O grafo é conexo."<< endl;
+            cout << endl;
+        }
+        else
+        {
+            cout << TerminalColors::Red;
+            cout << "O grafo não é conexo."<< endl;
+            cout << endl;
+        }
+
+        cout << TerminalColors::White;
+    }
     void buscaProfundidade(int vertice)
     {
         queue<int> profundidade;

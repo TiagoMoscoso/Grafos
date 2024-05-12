@@ -9,7 +9,7 @@
 #include "../Utils/Cleanlist.h"
 #include "../Utils/CopyList.h"
 #include "ListClass.cpp"
-
+#include "../Utils/SortList.H"
 class GrafList
 {
     protected:
@@ -225,8 +225,11 @@ class GrafList
             }
         }
 
-        void adicionaAresta(int pontoA, int pontoB, bool tipoGrafo, int valueAresta)
+        void adicionaAresta(int pontoA, int pontoB, bool tipoGrafo, int valueAresta, bool ponderado)
         {
+            if(ponderado)
+                removeAresta(pontoA, pontoB, tipoGrafo);//motivo matriz so suporta 1 aresta ponderada
+            
             ListGrap[pontoA]->push_back(ListClass(pontoB,valueAresta));
 
             if(!tipoGrafo && pontoA != pontoB)

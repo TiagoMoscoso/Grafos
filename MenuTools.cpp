@@ -252,7 +252,7 @@ class Menu
             cout << setw(35) << "Remover aresta:" << setw(5) << "(1)" << endl;
             if (!Gt.TipoGrafo)
             {
-                cout << setw(35) << "Identificar vizinhança:" << setw(5) << "(2)" << endl;
+                cout << setw(35) << "Identificar vizinhança:" << setw(5) << " (2)" << endl;
             }
             else
             {
@@ -269,10 +269,10 @@ class Menu
             {
                 cout << setw(35) << "Busca em Largura:" << setw(5) << "(10)" << endl;
                 cout << setw(35) << "Busca em Profundidade:" << setw(5) << "(11)" << endl;
-                if(Gt.TipoGrafo)
-                {
-                    cout << setw(35) << "Ordenacao topologica:" << setw(5) << "(12)" << endl;
-                }
+                cout << setw(35) << "Ordenacao topologica:" << setw(5) << "(12)" << endl;
+                cout << setw(35) << "Kruskal:" << setw(5) << "(13)" << endl;
+                cout << setw(35) << "Grafo conexo:" << setw(5) << "(14)" << endl;
+                cout << setw(35) << "Caminho minimo :" << setw(5) << "(15)" << endl;
             }
             cout << TerminalColors::Red;
             cout << "Para sair clique (Q)" << endl;
@@ -395,6 +395,14 @@ class Menu
             }
         }
 
+        void dijkstra()
+        {
+            cout << TerminalColors::Green;
+            cout << "Entre com os pontos para buscar o caminho minimo:" << endl;
+            cout << TerminalColors::White;
+            vector<int> pontos =  points::getPontos(Gt.NumVertices);
+            Gt.dijkstra(pontos[0], pontos[1]);
+        }
         void ordenacaoTopologica()
         {
             Gt.ordenacaoTopologica();
@@ -545,6 +553,15 @@ class Menu
                             break;
                             case 12:
                                 ordenacaoTopologica();
+                            break;
+                            case 13:
+                                Gt.kruskal();
+                            break;
+                            case 14:
+                                Gt.grafoConexo();
+                            break;
+                            case 15:
+                                dijkstra();
                             break;
                             default:
                             throw exception();

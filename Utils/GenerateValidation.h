@@ -21,6 +21,13 @@ class ValidationClass
         }
     }
 
+    void negativeValidation(int num)
+    {
+        for(int i = 0; i < num; i++)
+        {
+            Validation[i] = -1;
+        }
+    }
     bool verifyValidation(int num)
     {
         for(int i = 0; i < num; i++)
@@ -28,6 +35,35 @@ class ValidationClass
             if(Validation[i] == 0) return false;
         }
         return true;
+    }
+
+    bool verifyValidationDiferentZero(int num)
+    {
+        for(int i = 0; i < num; i++)
+        {
+            if(Validation[i] != 0) return false;
+        }
+        return true;
+    }
+
+    void printValidation(int num)
+    {
+        for(int i = 0; i < num; i++)
+        {
+            cout<< "[ "<<i<<" ]";
+        }
+        cout<< endl;
+        for(int i = 0; i < num; i++)
+        {
+            if(Validation[i] >= 0 && Validation[i] < 10)
+                cout<< "[ "<<Validation[i]<<" ]";
+            else if(Validation[i] >= 10 || ( Validation[i] < 0 && Validation[i] > -10 ) )
+                cout<< "[ "<<Validation[i]<<"]";
+            else
+                cout<< "["<<Validation[i]<<"]";
+        }  
+        cout<< endl;
+        
     }
 };
 #endif

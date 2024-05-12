@@ -9,7 +9,7 @@
 #include "../Utils/SumCollum.h"
 #include "../Utils/CleanLine.h"
 #include "../Utils/CopyMatrix.h"
-
+#include "../Utils/SortedListByArray.h"
 class GrapMatriz
 {
     protected:

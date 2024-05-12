@@ -2,6 +2,7 @@
 #include "AdvancedFunctions\GrafListAdvanced.cpp"
 #include "AdvancedFunctions\GrafMatrizAdvanced.cpp"
 #include <random>
+#include "../Utils/GenerateValidation.h"
 
 class GrafTools
 {
@@ -90,7 +91,7 @@ class GrafTools
             }
             if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
             {
-                GfLs.adicionaAresta(pontoA,pontoB,TipoGrafo,valueAresta);
+                GfLs.adicionaAresta(pontoA,pontoB,TipoGrafo,valueAresta,Ponderado);
                 if(Print)
                     GfLs.printaLista(NumVertices,NumVertices);
                 cout << endl;
@@ -102,7 +103,7 @@ class GrafTools
             random_device rd;
             mt19937 gerador(rd());
             uniform_int_distribution<int> distribuicao(0, NumVertices-1);
-            uniform_int_distribution<int> ponderador(-10, 10);
+            uniform_int_distribution<int> ponderador(0, 10);
             for(int i = 0; i < numAresta; i++)
             {
                 int pontoA = distribuicao(gerador);
@@ -118,12 +119,10 @@ class GrafTools
                 if(TipoDeEstrutura == 0 || TipoDeEstrutura == 2)
                 {
                     GfMt.adicionaAresta(pontoA,pontoB,TipoGrafo,value);
-                    //todo ponderado
                 }
                 if(TipoDeEstrutura == 1 || TipoDeEstrutura == 2)
                 {
-                    GfLs.adicionaAresta(pontoA,pontoB,TipoGrafo,value);
-                    //todo ponderado
+                    GfLs.adicionaAresta(pontoA,pontoB,TipoGrafo,value,Ponderado);
                 }
             }
 
