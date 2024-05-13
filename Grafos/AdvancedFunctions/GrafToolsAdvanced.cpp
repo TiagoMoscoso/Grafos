@@ -171,10 +171,18 @@ class GrafToolsAdvanced : public GrafTools
         }
         cout << endl;
         cout << TerminalColors::Green;
-        while (!ordenacao.empty())
+        if(ordenacao.size() == NumVertices)
         {
-            std::cout<<"[" << ordenacao.front() << "] -->";
-            ordenacao.pop();
+            while (!ordenacao.empty())
+            {
+                std::cout<<"[" << ordenacao.front() << "] -->";
+                ordenacao.pop();
+            }
+        }
+        else
+        {
+            cout << TerminalColors::Red;
+            std::cout<<"Não foi possivel realizar a ordenação topologica." << endl;
         }
         cout << endl;
     }
